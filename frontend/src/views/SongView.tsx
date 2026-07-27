@@ -145,6 +145,9 @@ export function SongView({ songId, navigate }: SongViewProps) {
             &#8592; {t('songView.back')}
           </button>
           <div style={{ display: 'flex', gap: 8 }}>
+            <button className="btn btn-ghost btn-sm" onClick={handleExportPdf}>
+              PDF
+            </button>
             {isOwner && (
               <button className="btn btn-ghost btn-sm" onClick={() => navigate('song-edit', { id: String(song.id) })}>
                 &#9998; {t('songView.edit')}
@@ -209,7 +212,6 @@ export function SongView({ songId, navigate }: SongViewProps) {
         onPickKey={chord.pickKey}
         onAutoFit={handleAutoFit}
         autoFitActive={autoFitActive}
-        onExportPdf={handleExportPdf}
         renderKey={songId}
       />
 

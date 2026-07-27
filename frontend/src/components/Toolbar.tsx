@@ -64,6 +64,7 @@ export function Toolbar({
         >
           KEY {currentKey || '?'}
         </button>
+        {/* Nashville number toggle — disabled per user request, unclear/unused
         <label className={`number-toggle${ov.num ? ' overridden' : ''}`} id="nashville-toggle">
           <input
             type="checkbox"
@@ -73,6 +74,7 @@ export function Toolbar({
           />
           <span>123</span>
         </label>
+        */}
         <button
           className={`transpose-btn col-toggle${twoCol ? ' active' : ''}${ov.twoCol ? ' overridden' : ''}`}
           onClick={onTwoColToggle}
