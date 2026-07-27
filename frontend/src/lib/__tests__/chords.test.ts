@@ -1,4 +1,4 @@
-import { extractDirective, updateDirective, toChordPro, ensureKeyDirective, detectFormat } from '../chords';
+import { extractDirective, updateDirective, toChordPro, ensureKeyDirective, detectFormat, getUniqueChords } from '../chords';
 
 // ─── extractDirective ───────────────────────────────────────────────
 
@@ -255,3 +255,28 @@ describe('renderChordPro sections', () => {
   });
 });
 
+// ─── getUniqueChords ────────────────────────────────────────────────
+
+describe('getUniqueChords', () => {
+  it('extracts unique chords in first-seen order', () => {
+    const content = '{title: Test}\n[G]Hello [D]world [Em]foo [C]bar [G]again';
+    expect(getUniqueChords(content)).toEqual(['G', 'D', 'Em', 'C']);
+  });
+
+  it('excludes section labels like [Chorus] from the chord list', () => {
+    const content = '[Chorus]\n[G]Hello [D]world\n[Verse]\n[C]More [Em]lyrics';
+    const chords = getUniqueChords(content);
+    expect(chords).not.toContain('Chorus');
+    expect(chords).not.toContain('Verse');
+    expect(chords).toEqual(['G', 'D', 'C', 'Em']);
+  });
+
+  it('applies transposition before extracting chords', () => {
+    const content = '[C]Hello [G]world';
+    expect(getUniqueChords(content, 2)).toEqual(['D', 'A']);
+  });
+
+  it('returns an empty array for lyrics-only content', () => {
+    expect(getUniqueChords('just some lyrics with no chords at all')).toEqual([]);
+  });
+});

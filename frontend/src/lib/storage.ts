@@ -6,6 +6,7 @@ const KEYS = {
   fontsize: 'cv_fontsize',
   localSetlists: 'cv_local_setlists',
   setlistOverrides: 'cv_setlist_overrides',
+  chordChartVisible: 'cv_chord_chart_visible',
 } as const;
 
 export function getStoredUser(): User | null {
@@ -29,6 +30,15 @@ export function getStoredTheme(): 'dark' | 'light' {
 
 export function setStoredTheme(theme: 'dark' | 'light'): void {
   localStorage.setItem(KEYS.theme, theme);
+}
+
+export function getStoredChordChartVisible(): boolean {
+  const raw = localStorage.getItem(KEYS.chordChartVisible);
+  return raw === null ? true : raw === '1';
+}
+
+export function setStoredChordChartVisible(visible: boolean): void {
+  localStorage.setItem(KEYS.chordChartVisible, visible ? '1' : '0');
 }
 
 export function getStoredFontSize(): number {

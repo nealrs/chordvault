@@ -8,6 +8,7 @@ import { useFontScale } from '../hooks/useFontScale';
 import { useTwoCol } from '../hooks/useTwoCol';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { ChordSheet } from '../components/ChordSheet';
+import { ChordChartBar } from '../components/ChordChartBar';
 import { Toolbar } from '../components/Toolbar';
 import { Loading } from '../components/Loading';
 import { AddToSetlistModal } from '../components/AddToSetlistModal';
@@ -189,6 +190,8 @@ export function SongView({ songId, navigate }: SongViewProps) {
           )}
         </div>
       </div>
+
+      <ChordChartBar content={content} transpose={chord.transpose} />
 
       <Toolbar
         currentKey={chord.currentKey}

@@ -9,6 +9,7 @@ import { useSetlistPlayer } from '../hooks/useSetlistPlayer';
 import { useFontScale } from '../hooks/useFontScale';
 import { useTwoCol } from '../hooks/useTwoCol';
 import { ChordSheet } from '../components/ChordSheet';
+import { ChordChartBar } from '../components/ChordChartBar';
 import { Toolbar } from '../components/Toolbar';
 import { SettingsPanel } from '../components/SettingsPanel';
 import { Loading } from '../components/Loading';
@@ -253,6 +254,8 @@ export function SetlistPlayView({ setlistId, isLocal: _isLocal, initialSetlist, 
           )}
         </div>
       </div>
+
+      <ChordChartBar content={content} transpose={entryTranspose} />
 
       <Toolbar
         currentKey={keyDisplay}

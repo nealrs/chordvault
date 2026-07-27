@@ -340,6 +340,50 @@ export function fixChordAccidentals(song: ChordSheetJS.Song): void {
   });
 }
 
+// Same exclusion list used elsewhere in this file (parseSongAutoWithFormat,
+// ResponsiveHtmlFormatter) for recognizing section labels like "[Chorus]"
+// that the ChordPro parser can otherwise mistake for a chord token.
+const CHORD_SECTION_LABEL = /^(?:Verse|Chorus|Bridge|Intro|Outro|Interlude|Pre-?Chorus|Ending|Tag|Coda|Break|Solo|Instrumental|Refrain)\s*\d*$/i;
+
+export function getUniqueChords(content: string, semitones = 0): string[] {
+  try {
+    const song = parseSongAuto(content);
+    if (!song) return [];
+    const transposed = semitones !== 0 ? song.transpose(semitones) : song;
+    fixChordAccidentals(transposed);
+
+    const seen = new Set<string>();
+    const ordered: string[] = [];
+    transposed.paragraphs.forEach((p) => {
+      p.lines.forEach((line) => {
+        line.items.forEach((item) => {
+          const it = item as { chords?: string };
+          const raw = it.chords?.trim();
+          if (!raw || CHORD_SECTION_LABEL.test(raw)) return;
+          // Validate via ChordSheetJS's own parser as a second filter --
+          // Chord.parse is lenient (it can partially match garbage strings
+          // that start with a valid root letter), so this mainly catches
+          // content with no leading note letter at all.
+          try {
+            const parsed = ChordSheetJS.Chord.parse(raw);
+            if (!parsed) return;
+          } catch {
+            return;
+          }
+          const norm = normalizeChord(raw);
+          if (!seen.has(norm)) {
+            seen.add(norm);
+            ordered.push(norm);
+          }
+        });
+      });
+    });
+    return ordered;
+  } catch {
+    return [];
+  }
+}
+
 export function convertToNashville(song: ChordSheetJS.Song, key: string): ChordSheetJS.Song {
   song.paragraphs.forEach((p) => {
     p.lines.forEach((line) => {
