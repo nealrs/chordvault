@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import logoSvg from '../assets/logo.svg?raw';
+// import logoSvg from '../assets/logo.svg?raw'; // only used by the hidden banner/logo below
 
 interface NavProps {
   view: string;
@@ -28,11 +28,13 @@ export function Nav({ view, navigate }: NavProps) {
   const themeIconHtml = theme === 'light' ? '&#9790;' : '&#9788;';
 
   const songsBtnActive = view === 'browse' ? ' active' : '';
-  const setlistBtnActive = ['setlists', 'setlist-edit', 'setlist-play', 'public-setlists'].includes(view) ? ' active' : '';
+  // const setlistBtnActive = ['setlists', 'setlist-edit', 'setlist-play', 'public-setlists'].includes(view) ? ' active' : ''; // only used by the hidden Setlists nav buttons above
 
   return (
     <nav id="nav">
+      {/* Banner/logo hidden per user request
       <div className="nav-brand" onClick={() => navigate('browse')}><span className="nav-logo" dangerouslySetInnerHTML={{ __html: logoSvg }} /> ChordVault</div>
+      */}
       <div className="nav-links" id="nav-links">
         <button
           className="nav-btn nav-icon"
@@ -49,12 +51,14 @@ export function Nav({ view, navigate }: NavProps) {
 
         {!user ? (
           <>
+            {/* Setlists nav button hidden per user request
             <button
               className={`nav-btn${setlistBtnActive}`}
               onClick={() => navigate('public-setlists')}
             >
               Setlists
             </button>
+            */}
             <button
               className={`nav-btn nav-signin${view === 'auth' ? ' active' : ''}`}
               onClick={() => navigate('auth')}
@@ -64,12 +68,14 @@ export function Nav({ view, navigate }: NavProps) {
           </>
         ) : (
           <>
+            {/* Setlists nav button hidden per user request
             <button
               className={`nav-btn${setlistBtnActive}`}
               onClick={() => navigate('setlists')}
             >
               Setlists
             </button>
+            */}
             {isAdmin && (
               <button
                 className={`nav-btn${view === 'admin' ? ' active' : ''}`}

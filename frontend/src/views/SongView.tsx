@@ -13,7 +13,7 @@ import { Toolbar } from '../components/Toolbar';
 import { Loading } from '../components/Loading';
 import { AddToSetlistModal } from '../components/AddToSetlistModal';
 import { renderChordPro, songHasKey, autoFit } from '../lib/chords';
-import { languageName } from '../lib/languages';
+// import { languageName } from '../lib/languages'; // only used by the hidden language badge below
 import type { Song, SongVersion, Correction } from '../types';
 
 interface SongViewProps {
@@ -163,17 +163,23 @@ export function SongView({ songId, navigate }: SongViewProps) {
                 </button>
               </>
             )}
+            {/* Add-to-setlist button hidden per user request
             <button className="btn btn-ghost btn-sm" onClick={() => setAddToSetlistOpen(true)}>
               &#43; {t('songView.addToSetlist')}
             </button>
+            */}
           </div>
         </div>
         <h1 className="song-view-title">{song.title}</h1>
+        {/* Artist hidden per user request — too much vertical space
         {song.artist && <div className="song-view-artist">{song.artist}</div>}
+        */}
         <div className="song-view-meta">
+          {/* Author (@username) and language badge hidden per user request — too much vertical space
           {!isOwner && song.username && <span className="song-view-by">@{song.username}</span>}
-          {song.bpm && <span className="badge badge-bpm">{song.bpm} bpm</span>}
           {song.language && <span className="badge badge-lang" title={languageName(song.language)}>{song.language.toUpperCase()}</span>}
+          */}
+          {song.bpm && <span className="badge badge-bpm">{song.bpm} bpm</span>}
           {isOwner && song.visibility === 'private' && <span className="badge badge-private">&#128274; Private</span>}
           {versions.length > 1 && (
             <div className="version-selector-container">

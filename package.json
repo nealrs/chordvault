@@ -47,6 +47,9 @@
     "*.js": "eslint",
     "lib/**/*.js": "eslint",
     "routes/**/*.js": "eslint",
-    "frontend/src/**/*.{ts,tsx}": "cd frontend && npx eslint"
+    "frontend/src/**/*.{ts,tsx}": "frontend/node_modules/.bin/eslint --config frontend/eslint.config.js"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true
   }
 }

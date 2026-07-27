@@ -27,8 +27,8 @@ interface ToolbarProps {
 export function Toolbar({
   currentKey,
   nashville,
-  nashvilleDisabled,
-  onNashvilleChange,
+  nashvilleDisabled: _nashvilleDisabled,
+  onNashvilleChange: _onNashvilleChange,
   twoCol,
   onTwoColToggle,
   fontSize,
