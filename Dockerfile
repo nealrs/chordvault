@@ -1,17 +1,21 @@
 # Stage 1: Build frontend
 FROM node:26-alpine AS frontend
+ENV CI=true
+RUN npm install -g pnpm@11.15.1
 WORKDIR /app/frontend
-COPY frontend/package*.json frontend/.npmrc ./
-RUN npm ci
+COPY frontend/package.json frontend/pnpm-lock.yaml frontend/pnpm-workspace.yaml frontend/.npmrc ./
+RUN pnpm install --frozen-lockfile
 COPY frontend/ ./
-RUN npm run build
+RUN pnpm run build
 
 # Stage 2: Build backend native deps
 FROM node:26-alpine AS backend
+ENV CI=true
 RUN apk add --no-cache python3 make g++
+RUN npm install -g pnpm@11.15.1
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci --production
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN pnpm install --frozen-lockfile --prod
 
 # Stage 3: Final
 FROM node:26-alpine

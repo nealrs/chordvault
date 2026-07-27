@@ -11,10 +11,11 @@
   "engines": {
     "node": ">=18.0.0"
   },
+  "packageManager": "pnpm@11.15.1",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "concurrently \"NODE_ENV=development node server.js\" \"cd frontend && npm run dev\"",
+    "dev": "concurrently \"NODE_ENV=development node server.js\" \"cd frontend && pnpm dev\"",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"*.js\" \"lib/**/*.js\" \"routes/**/*.js\"",
@@ -48,8 +49,5 @@
     "lib/**/*.js": "eslint",
     "routes/**/*.js": "eslint",
     "frontend/src/**/*.{ts,tsx}": "frontend/node_modules/.bin/eslint --config frontend/eslint.config.js"
-  },
-  "allowScripts": {
-    "better-sqlite3@12.11.1": true
   }
 }

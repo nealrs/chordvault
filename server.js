@@ -27,8 +27,14 @@ app.use(helmet({
       fontSrc: ["'self'", "fonts.gstatic.com"],
       connectSrc: ["'self'"],
       frameSrc: ["'self'", "https://challenges.cloudflare.com"],
+      upgradeInsecureRequests: null,
     }
-  }
+  },
+  // This app is served over plain HTTP behind Tailscale (or directly on
+  // the LAN); TLS termination, if any, happens upstream. HSTS would make
+  // browsers remember "always use https" for whatever hostname they hit
+  // this on, breaking plain-http access on other hostnames/ports later.
+  hsts: false,
 }));
 
 const {

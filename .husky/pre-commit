@@ -1,8 +1,8 @@
 # Run lint-staged (backend + frontend lint on staged files)
-npx lint-staged
+pnpm exec lint-staged
 
 # Run frontend typecheck and unit tests
-cd frontend && npx tsc --noEmit && npm test
+cd frontend && pnpm exec tsc --noEmit && pnpm test
 
 # Run backend unit tests
-cd .. && npm test
+cd .. && pnpm test
