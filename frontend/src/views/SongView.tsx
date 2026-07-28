@@ -7,6 +7,7 @@ import { useChordRenderer } from '../hooks/useChordRenderer';
 import { useFontScale } from '../hooks/useFontScale';
 import { useTwoCol } from '../hooks/useTwoCol';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
+import { useWakeLock } from '../hooks/useWakeLock';
 import { ChordSheet } from '../components/ChordSheet';
 import { ChordChartBar } from '../components/ChordChartBar';
 import { Toolbar } from '../components/Toolbar';
@@ -59,7 +60,12 @@ export function SongView({ songId, navigate }: SongViewProps) {
   const { setTranspose: resetChordTranspose, setNashville: resetChordNashville } = chord;
   const fontScale = useFontScale();
   const twoColState = useTwoCol();
+  const wakeLock = useWakeLock();
   const [autoFitActive, setAutoFitActive] = useState(false);
+
+  useEffect(() => {
+    if (wakeLock.error) toast(wakeLock.error, 'error');
+  }, [wakeLock.error, toast]);
 
   const handleAutoFit = () => {
     setAutoFitActive(true);
@@ -145,6 +151,15 @@ export function SongView({ songId, navigate }: SongViewProps) {
             &#8592; {t('songView.back')}
           </button>
           <div style={{ display: 'flex', gap: 8 }}>
+            {wakeLock.supported && (
+              <button
+                className={`btn btn-ghost btn-sm wakelock-btn${wakeLock.active ? ' active' : ''}`}
+                onClick={wakeLock.toggle}
+                title={wakeLock.active ? 'Screen will stay on — tap to allow sleep' : 'Keep the screen on while playing'}
+              >
+                Wakelock {wakeLock.active ? 'On' : 'Off'}
+              </button>
+            )}
             <button className="btn btn-ghost btn-sm" onClick={handleExportPdf}>
               PDF
             </button>

@@ -198,6 +198,15 @@ textarea { resize: vertical; min-height: 300px; font-family: 'JetBrains Mono', m
   box-shadow: none;
 }
 .btn-ghost:hover { background: var(--surface2); border-color: var(--muted); color: var(--text); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.btn-ghost.active { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
+
+.wakelock-btn { font-weight: 500; }
+.wakelock-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+.wakelock-btn.active:hover { background: var(--accent2); border-color: var(--accent2); color: var(--bg); transform: translateY(-1px); }
 
 .btn-danger {
   background: transparent;
